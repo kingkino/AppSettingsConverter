@@ -1,6 +1,9 @@
 # kokoniToolsByBlazorClientSide
 ClientSide Blazorで作ったツールになります。
 
+ローカルで動かすためにはClientSideBlazor用の開発環境が必要になるのでこちらを参考にしてください。
+https://docs.microsoft.com/ja-jp/aspnet/core/blazor/get-started?view=aspnetcore-3.1&tabs=visual-studio
+
 # 現在含まれているツール
 ## AppSettingsConverter
 
