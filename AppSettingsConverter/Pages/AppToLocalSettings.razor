@@ -1,0 +1,68 @@
+﻿@using Newtonsoft.Json
+@using Newtonsoft.Json.Linq
+@using System.Collections.Generic;
+@using System.Linq;
+@using AppSettingsConverter.Json
+@using AppSettingsConverter.Model
+
+@page "/AppToLocalSettings"
+
+<h4>Convert AppSettings To LocalSettings</h4>
+<div>
+    <div style="width:50%; height:100%; float:left;">
+        <textarea id="beforeChange"
+                  @oninput="onChnage"
+                  placeholder="Input Your AppSettings JSON"
+                  Style="width:95%; height: 90vh; margin:5px;" />
+    </div>
+    <div style="width:50%; height:100%; float:left;">
+        <textarea id="afterChange"
+                  @bind="convertMessage"
+                  readonly
+                  disabled
+                  Style="width:100%; height: 90vh; margin:5px;" />
+    </div>
+    <div style="clear: both;"></div>
+</div>
+
+@code {
+    private string convertMessage { get; set; }
+
+    public void onChnage(ChangeEventArgs e)
+    {
+        convertMessage = ConvertAppSettingsToLocal(e.Value.ToString());
+    }
+
+    public static string ConvertAppSettingsToLocal(string json)
+    {
+        if (string.IsNullOrEmpty(json)) return string.Empty;
+
+        try
+        {
+            var result = JToken.Parse(json);
+
+            if (result.Type == JTokenType.Array)
+            {
+                var JsonList = JsonConvert.DeserializeObject<List<AzureAppSettingsModel>>(json);
+                var items = new JObject();
+                JsonList.ForEach(x => items.Add(x.Name, x.Value));
+                return JsonConvert.SerializeObject(items, Formatting.Indented);
+            }
+            else if (result.Type == JTokenType.Object)
+            {
+                var singleJson = JsonConvert.DeserializeObject<AzureAppSettingsModel>(json);
+                return JsonConvert.SerializeObject(
+                    new JObject
+                    {
+                        { singleJson.Name, singleJson.Value }
+                                                }, Formatting.Indented);
+            }
+        }
+        catch(Exception e)
+        {
+            return "This is unsupported Json Fromat!!";
+        }
+
+        return string.Empty;
+    }
+}

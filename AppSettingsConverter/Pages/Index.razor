@@ -1,0 +1,30 @@
+﻿@using Newtonsoft.Json
+@using Newtonsoft.Json.Linq
+@using System.Collections.Generic;
+@using System.Linq;
+@using AppSettingsConverter.Json
+@using AppSettingsConverter.Model
+
+@page "/"
+
+    <div class="row">
+        <div class="col-sm-2" />
+        <div class="col-sm-4">
+            <div class="card card-body">
+                <h5 class="card-title">Convert LocalSettings To AppSettings</h5>
+                <p class="card-text">LocalSettingsのJsonFormatをAzure WebApps向けのJsonFormatに変換するツールです。</p>
+                <p class="card-text">クライアントサイドで完結するので変換処理にサーバ通信はしていません。</p>
+                <a href="LocalToAppSettings" class="btn btn-primary" style="width:100px;">Use It!</a>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card card-body">
+                <h5 class="card-title">Convert AppSettings To LocalSettings</h5>
+                <p class="card-text">WebAppsのJsonFormatをLocalSettings向けのJsonFormatに変換するツールです。</p>
+                <p class="card-text">クライアントサイドで完結するので変換処理にサーバ通信はしていません。</p>
+                <a href="AppToLocalSettings" class="btn btn-primary" style="width:100px;">Use It!</a>
+            </div>
+        </div>
+        <div class="col-sm-2" />
+    </div>
+

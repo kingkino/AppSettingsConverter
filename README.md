@@ -1,2 +1,10 @@
 # kokoniToolsByBlazorClientSide
-Blazorで作ったツール
+ClientSide Blazorで作ったツールになります。
+
+# 現在含まれているツール
+## AppSettingsConverter
+
+Azure WebAppsのAppSettingsとローカル環境のloaclSettingsのフォーマット変換をするツールです。
+ClientSide Blazorで作成したのはブラウザ内で通信を発生せずに処理を完結させるためです。
+AppSettingsの情報はセキュリティにかかる内容も多いですので。
+

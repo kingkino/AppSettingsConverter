@@ -1,0 +1,79 @@
+﻿@using Newtonsoft.Json
+@using Newtonsoft.Json.Linq
+@using System.Collections.Generic;
+@using System.Linq;
+@using AppSettingsConverter.Json
+@using AppSettingsConverter.Model
+
+
+@page "/LocalToAppSettings"
+
+<h4>Convert LocalSettings To AppSettings</h4>
+
+<div>
+    <strong>SlotSettings : </strong>
+    @foreach (var item in new string[] { "true", "false" })
+    {
+        <input type="radio" name="SlotSettings" id="@item" value="@item" @onchange="RadioSelection" checked=@(RadioValue.Equals(item,StringComparison.OrdinalIgnoreCase)) />
+        <label for="@item">@item</label>
+    }
+</div>
+
+<div>
+    <div style="width:50%; height:100%; float:left;">
+        <textarea id="beforeChange"
+                  @bind="convertBeforeMessage"
+                  @oninput="onChnage"
+                  placeholder="Input Your LocalSettings JSON"
+                  Style="width:95%; height: 85vh; margin:5px;" />
+    </div>
+    <div style="width:50%; height:100%; float:left;">
+        <textarea id="afterChange"
+                  @bind="convertMessage"
+                  readonly
+                  disabled
+                  Style="width:100%; height: 85vh; margin:5px;" />
+    </div>
+    <div style="clear: both;"></div>
+</div>
+
+@code {
+    private string convertBeforeMessage { get; set; }
+    private string convertMessage { get; set; }
+    private string RadioValue = string.Empty;
+
+    public void RadioSelection(ChangeEventArgs e)
+    {
+        RadioValue = e.Value.ToString();
+        convertMessage = ConvertAppSettingsToAzure(convertBeforeMessage);
+    }
+
+    public void onChnage(ChangeEventArgs e)
+    {
+        convertMessage = ConvertAppSettingsToAzure(e.Value.ToString());
+    }
+
+    public string ConvertAppSettingsToAzure(string json)
+    {
+        if (string.IsNullOrEmpty(json)) return string.Empty;
+
+        try
+        {
+            var jsonResult = JToken.Parse(json);
+            var fieldsCollector = new JsonFieldsCollector(jsonResult);
+            var fields = fieldsCollector.GetAllFields();
+            var list = (from item in fields
+                        select new AzureAppSettingsModel
+                        {
+                            Name = item.Key.ToString(),
+                            Value = item.Value.ToString(),
+                            SlotSetting = RadioValue == string.Empty ? "false" : RadioValue
+                        }).ToList();
+            return JsonConvert.SerializeObject(list, Formatting.Indented);
+        }
+        catch (Exception e)
+        {
+            return "This is unsupported Json Fromat!!";
+        }
+    }
+}
