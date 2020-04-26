@@ -14,7 +14,7 @@
     <strong>SlotSettings : </strong>
     @foreach (var item in new string[] { "true", "false" })
     {
-        <input type="radio" name="SlotSettings" id="@item" value="@item" @onchange="RadioSelection" checked=@(RadioValue.Equals(item,StringComparison.OrdinalIgnoreCase)) />
+        <input type="radio" name="SlotSettings" id="@item" value="@item" @onchange="RadioSelection" checked=@(RadioValue.ToString().Equals(item,StringComparison.OrdinalIgnoreCase)) />
         <label for="@item">@item</label>
     }
 </div>
@@ -40,11 +40,11 @@
 @code {
     private string convertBeforeMessage { get; set; }
     private string convertMessage { get; set; }
-    private string RadioValue = string.Empty;
+    private bool RadioValue = false;
 
     public void RadioSelection(ChangeEventArgs e)
     {
-        RadioValue = e.Value.ToString();
+        RadioValue = bool.TryParse(e.Value.ToString(),out var radioCheck)? radioCheck : false;
         convertMessage = ConvertAppSettingsToAzure(convertBeforeMessage);
     }
 
@@ -67,7 +67,7 @@
                         {
                             Name = item.Key.Replace(".", ":").ToString(),
                             Value = item.Value.ToString(),
-                            SlotSetting = RadioValue == string.Empty ? "false" : RadioValue
+                            SlotSetting = RadioValue
                         }).ToList();
             return JsonConvert.SerializeObject(list, Formatting.Indented);
         }

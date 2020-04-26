@@ -14,6 +14,6 @@ namespace AppSettingsConverter.Model
         [JsonProperty("value")]
         public string Value { get; set; }
         [JsonProperty("slotSetting")]
-        public string SlotSetting { get; set; }
+        public bool SlotSetting { get; set; }
     }
 }
