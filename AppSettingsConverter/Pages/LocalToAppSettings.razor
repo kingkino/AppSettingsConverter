@@ -65,7 +65,7 @@
             var list = (from item in fields
                         select new AzureAppSettingsModel
                         {
-                            Name = item.Key.ToString(),
+                            Name = item.Key.Replace(".", ":").ToString(),
                             Value = item.Value.ToString(),
                             SlotSetting = RadioValue == string.Empty ? "false" : RadioValue
                         }).ToList();
