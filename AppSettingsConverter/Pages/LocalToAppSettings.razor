@@ -56,10 +56,12 @@
     public string ConvertAppSettingsToAzure(string json)
     {
         if (string.IsNullOrEmpty(json)) return string.Empty;
-
         try
         {
-            var jsonResult = JToken.Parse(json);
+            var resultObj = JObject.Parse(json).GetValue("Values");  
+            var jsonResult = resultObj == null
+                    ? JToken.Parse(json)
+                    : JToken.Parse(resultObj.ToString());
             var fieldsCollector = new JsonFieldsCollector(jsonResult);
             var fields = fieldsCollector.GetAllFields();
             var list = (from item in fields

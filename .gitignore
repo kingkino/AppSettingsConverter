@@ -275,3 +275,5 @@ AppSettingsConverter/bin/Debug/netstandard2.1/wwwroot/_framework/wasm/dotnet.was
 AppSettingsConverter/.vs/AppSettingsConverter/DesignTimeBuild/.dtbcache.v2
 AppSettingsConverter/.vs/AppSettingsConverter/config/applicationhost.config
 AppSettingsConverter/.vs/AppSettingsConverter/v16/.suo
+/AppSettingsConverter/obj/Debug/netstandard2.1
+/AppSettingsConverter/bin/Debug/netstandard2.1
