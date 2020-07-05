@@ -16,7 +16,7 @@ steps:
 - task: DotNetCoreInstaller@0
   displayName: 'Installing .NET Core SDK...'
   inputs:
-    version: 3.2.0
+    version: 3.1.5
 
 - script: dotnet build --configuration $(buildConfiguration) AppSettingsConverter/AppSettingsConverter.csproj
   displayName: 'Building $(buildConfiguration)...'
