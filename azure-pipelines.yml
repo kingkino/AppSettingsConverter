@@ -13,10 +13,10 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- task: DotNetCoreInstaller@0
-  displayName: 'Installing .NET Core SDK...'
+- task: UseDotNet@2
   inputs:
-    version: 3.x
+    version: '3.1.x'
+    packageType: runtime
 
 - script: dotnet build --configuration $(buildConfiguration) AppSettingsConverter/AppSettingsConverter.csproj
   displayName: 'Building $(buildConfiguration)...'
