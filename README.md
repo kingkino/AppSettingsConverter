@@ -1,10 +1,8 @@
-# kokoniToolsByBlazorClientSide
+# AppSettingsConverter
 ClientSide Blazorで作ったツールになります。
 
 ローカルで動かすためにはClientSideBlazor用の開発環境が必要になるのでこちらを参考にしてください。
 https://docs.microsoft.com/ja-jp/aspnet/core/blazor/get-started?view=aspnetcore-3.1&tabs=visual-studio
-
-## AppSettingsConverter
 
 Azure WebAppsのAppSettingsとローカル環境のloaclSettingsのフォーマット変換をするツールです。
 シナリオ的にはWebAppsで設定されている設定情報をローカルに持ってきて動かしたい時にフォーマット変換するのがめんどくさいので作りました。
