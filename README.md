@@ -12,8 +12,8 @@ AppSettingsの情報はセキュリティにかかる内容も多いですので
 
 VS CodeのAzure Extension使えば実現可能なのですが、あちらは設定情報のアップロードもできてしまうのでオペレーションミスを懸念して利用を控えています。
 
-![画像１](https://github.com/kingkino/kokoniToolsByBlazorClientSide/blob/master/images/01.png "画像１")
+![画像１](https://raw.githubusercontent.com/kingkino/AppSettingsConverter/master/01.png "画像１")
 
-![画像２](https://github.com/kingkino/kokoniToolsByBlazorClientSide/blob/master/images/02.png "画像２")
+![画像２](https://raw.githubusercontent.com/kingkino/AppSettingsConverter/master/02.png "画像２")
 
-![画像３](https://github.com/kingkino/kokoniToolsByBlazorClientSide/blob/master/images/03.png "画像３")
+![画像３](https://raw.githubusercontent.com/kingkino/AppSettingsConverter/master/03.png "画像３")
