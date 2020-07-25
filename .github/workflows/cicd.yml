@@ -17,7 +17,7 @@ jobs:
         # Generate the website
         - name: Publish
           run: | 
-            cp **/AppSettingsConverter/wwwroot/index.html **/AppSettingsConverter/wwwroot/404.html
+            cp AppSettingsConverter/wwwroot/index.html AppSettingsConverter/wwwroot/404.html
             dotnet publish **/AppSettingsConverter.csproj --configuration Release
 
         # Publish the website
