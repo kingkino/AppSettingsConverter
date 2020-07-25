@@ -1,4 +1,4 @@
-name: 'Publish application'
+name: 'Publish Blazor Client App'
 on: push
 
 jobs:
@@ -16,7 +16,7 @@ jobs:
 
         # Generate the website
         - name: Publish
-          run: dotnet publish AppSettingsConverter/AppSettingsConverter.csproj --configuration Release
+          run: dotnet publish **/AppSettingsConverter.csproj --configuration Release
 
         # Publish the website
         - name: GitHub Pages action
@@ -29,5 +29,3 @@ jobs:
             allow_empty_commit: false
             keep_files: false
             force_orphan: true
-            # TODO uncomment the following line if you have a custom domain name
-            # cname: demo.meziantou.net
