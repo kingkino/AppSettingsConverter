@@ -4,7 +4,7 @@ namespace AppSettingsConverter.Model
 {
     public class AzureAppSettings
     {
-        public AzureAppSettingsModel[] root { get; set; }
+        public AzureAppSettingsModel[] Root { get; set; }
     }
 
     public class AzureAppSettingsModel

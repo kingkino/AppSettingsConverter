@@ -5,11 +5,11 @@ namespace AppSettingsConverter.Json
 {
     public class JsonFieldsCollector
     {
-        private readonly Dictionary<string, JValue> fields;
+        private readonly Dictionary<string, JValue> _fields;
 
         public JsonFieldsCollector(JToken token)
         {
-            fields = new Dictionary<string, JValue>();
+            _fields = new Dictionary<string, JValue>();
             CollectFields(token);
         }
 
@@ -29,11 +29,11 @@ namespace AppSettingsConverter.Json
                     CollectFields(((JProperty)jToken).Value);
                     break;
                 default:
-                    fields.Add(jToken.Path, (JValue)jToken);
+                    _fields.Add(jToken.Path, (JValue)jToken);
                     break;
             }
         }
 
-        public IEnumerable<KeyValuePair<string, JValue>> GetAllFields() => fields;
+        public IEnumerable<KeyValuePair<string, JValue>> GetAllFields() => _fields;
     }
 }
