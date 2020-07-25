@@ -73,7 +73,7 @@
                         }).ToList();
             return JsonConvert.SerializeObject(list, Formatting.Indented);
         }
-        catch (Exception e)
+        catch
         {
             return $"This is unsupported Json Format!!";
         }
