@@ -1,3 +1,5 @@
+![Publish application](https://github.com/kingkino/AppSettingsConverter/workflows/Publish%20application/badge.svg)
+
 # AppSettingsConverter
 ClientSide Blazorで作ったツールになります。
 

@@ -1,4 +1,4 @@
-name: 'Publish application'
+name: 'Publish Blazor Client App'
 on: push
 
 jobs:
@@ -14,24 +14,18 @@ jobs:
           with:
             dotnet-version: 3.1.x
 
-        # Run tests
-        - name: Test
-          run: dotnet test
-
         # Generate the website
         - name: Publish
-          run: dotnet publish myapp.csproj --configuration Release
+          run: dotnet publish **/AppSettingsConverter.csproj --configuration Release
 
         # Publish the website
         - name: GitHub Pages action
           if: ${{ github.ref == 'refs/heads/master' }} # Publish only when the push is on master
           uses: peaceiris/actions-gh-pages@v3.6.1
           with:
-            github_token: ${{ secrets.PUBLISH_TOKEN }}
-            publish_branch: gh-pages
-            publish_dir: bin/Release/netstandard2.1/publish/wwwroot
+            github_token: ${{ secrets.PUBLISHTOKEN }}
+            publish_branch: github-pages
+            publish_dir: AppSettingsConverter/bin/Release/netstandard2.1/publish/wwwroot
             allow_empty_commit: false
             keep_files: false
             force_orphan: true
-            # TODO uncomment the following line if you have a custom domain name
-            # cname: demo.meziantou.net
