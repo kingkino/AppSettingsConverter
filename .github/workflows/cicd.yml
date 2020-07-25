@@ -20,7 +20,7 @@ jobs:
 
         # Generate the website
         - name: Publish
-          run: dotnet publish myapp.csproj --configuration Release
+          run: dotnet publish AppSettingsConverter.csproj --configuration Release
 
         # Publish the website
         - name: GitHub Pages action
@@ -28,7 +28,7 @@ jobs:
           uses: peaceiris/actions-gh-pages@v3.6.1
           with:
             github_token: ${{ secrets.PUBLISH_TOKEN }}
-            publish_branch: gh-pages
+            publish_branch: github-pages
             publish_dir: bin/Release/netstandard2.1/publish/wwwroot
             allow_empty_commit: false
             keep_files: false
