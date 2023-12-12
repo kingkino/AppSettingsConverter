@@ -6,30 +6,27 @@ namespace AppSettingsConverter.Json
 {
     public class JsonFieldsConverter
     {
-        public static JToken ConvertToJToken(IEnumerable<OutputItem> outputItems)
+        public static JArray ConvertToJArray(IEnumerable<OutputItem> outputItems)
         {
-            var root = new JObject();
+            var jsonArray = new JArray();
             foreach (var item in outputItems)
             {
                 var pathSegments = item.Name.Split(':');
-                var currentToken = root;
+                var currentObject = new JObject();
 
-                for (int i = 0; i < pathSegments.Length - 1; i++)
+                currentObject.Add(pathSegments[pathSegments.Length - 1], new JValue(item.Value));
+
+                for (int i = pathSegments.Length - 2; i >= 0; i--)
                 {
-                    var segment = pathSegments[i];
-                    if (!currentToken.TryGetValue(segment, out var existingToken) || existingToken.Type != JTokenType.Object)
-                    {
-                        existingToken = new JObject();
-                        currentToken[segment] = existingToken;
-                    }
-
-                    currentToken = (JObject)existingToken;
+                    var newObj = new JObject();
+                    newObj.Add(pathSegments[i], currentObject);
+                    currentObject = newObj;
                 }
 
-                currentToken[pathSegments[pathSegments.Length - 1]] = new JValue(item.Value);
+                jsonArray.Add(currentObject);
             }
 
-            return root;
+            return jsonArray;
         }
     }
 }

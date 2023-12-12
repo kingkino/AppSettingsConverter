@@ -277,3 +277,6 @@ AppSettingsConverter/.vs/AppSettingsConverter/config/applicationhost.config
 AppSettingsConverter/.vs/AppSettingsConverter/v16/.suo
 /AppSettingsConverter/obj/Debug/netstandard2.1
 /AppSettingsConverter/bin/Debug/netstandard2.1
+bin/
+obj/
+/AppSettingsConverter/.vs/AppSettingsConverter

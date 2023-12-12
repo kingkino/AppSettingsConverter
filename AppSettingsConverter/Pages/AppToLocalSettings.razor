@@ -10,18 +10,10 @@
 <h4>Convert AppSettings To LocalSettings</h4>
 
 <div>
-    <strong>FormatSettings : </strong>
-    @foreach (var item in new string[] { "Flat", "Structure" })
-    {
-        <input type="radio" name="FormatSettings" id="@item" value="@item" @onchange="RadioSelection" checked=@(_radioValue.ToString().Equals(item,StringComparison.OrdinalIgnoreCase)) />
-        <label for="@item">@item</label>
-    }
-</div>
-
-<div>
     <div style="width:50%; height:100%; float:left;">
         <textarea id="beforeChange"
                   @oninput="OnChnage"
+                  @bind="ConvertBeforeMessage"
                   placeholder="Input Your AppSettings JSON"
                   Style="width:95%; height: 90vh; margin:5px;" />
     </div>
@@ -38,34 +30,10 @@
 @code {
     private string ConvertBeforeMessage { get; set; }
     private string ConvertMessage { get; set; }
-    private string _radioValue = "Flat";
-
-    public void RadioSelection(ChangeEventArgs e)
-    {
-        if (e.Value.ToString().Equals("Flat", StringComparison.OrdinalIgnoreCase))
-        {
-            ConvertMessage = ConvertAppSettingsToLocalFlat(ConvertBeforeMessage);
-        }
-        else if (e.Value.ToString().Equals("Structure", StringComparison.OrdinalIgnoreCase))
-        {
-            ConvertMessage = ConvertAppSettingsToLocalFlat(ConvertBeforeMessage);
-        }
-        else
-        {}
-    }
 
     public void OnChnage(ChangeEventArgs e)
     {
-        if (_radioValue.Equals("Flat", StringComparison.OrdinalIgnoreCase))
-        {
-            ConvertMessage = ConvertAppSettingsToLocalFlat(e.Value.ToString());
-        }
-        else if (_radioValue.Equals("Structure", StringComparison.OrdinalIgnoreCase))
-        {
-            ConvertMessage = ConvertAppSettingsToLocalStructure(e.Value.ToString());
-        }
-        else
-        {}
+        ConvertMessage = ConvertAppSettingsToLocalFlat(e.Value.ToString());
     }
 
     public static string ConvertAppSettingsToLocalFlat(string json)
@@ -92,25 +60,6 @@
                         { singleJson.Name, singleJson.Value }
                     }, Formatting.Indented);
             }
-        }
-        catch
-        {
-            return $"This is unsupported Json Format!!";
-        }
-
-        return string.Empty;
-    }
-
-    public static string ConvertAppSettingsToLocalStructure(string json)
-    {
-        if (string.IsNullOrEmpty(json)) return string.Empty;
-
-        try
-        {
-            var outputItems = JsonConvert.DeserializeObject<List<OutputItem>>(json);
-            var result = JsonFieldsConverter.ConvertToJToken(outputItems);
-            string jsonString = result.ToString(Formatting.None);
-            return jsonString;
         }
         catch
         {
