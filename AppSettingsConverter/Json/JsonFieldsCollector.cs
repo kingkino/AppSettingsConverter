@@ -1,39 +1,49 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using AppSettingsConverter.Model;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using System.Linq;
+using static AppSettingsConverter.Json.JsonFieldsCollector;
 
 namespace AppSettingsConverter.Json
 {
     public class JsonFieldsCollector
     {
-        private readonly Dictionary<string, JValue> _fields;
+        private readonly List<OutputItem> _outputItems;
 
         public JsonFieldsCollector(JToken token)
         {
-            _fields = new Dictionary<string, JValue>();
+            _outputItems = new List<OutputItem>();
             CollectFields(token);
         }
 
-        private void CollectFields(JToken jToken)
+        private void CollectFields(JToken jToken, string parentKey = "")
         {
             switch (jToken.Type)
             {
                 case JTokenType.Object:
                     foreach (var child in jToken.Children<JProperty>())
-                        CollectFields(child);
+                    {
+                        var childKey = child.Name;
+                        CollectFields(child.Value, $"{parentKey}{(string.IsNullOrEmpty(parentKey) ? "" : ":")}{childKey}");
+                    }
                     break;
                 case JTokenType.Array:
-                    foreach (var child in jToken.Children())
-                        CollectFields(child);
-                    break;
-                case JTokenType.Property:
-                    CollectFields(((JProperty)jToken).Value);
+                    for (int i = 0; i < jToken.Count(); i++)
+                    {
+                        CollectFields(jToken[i], $"{parentKey}{(string.IsNullOrEmpty(parentKey) ? "" : ":")}{i}");
+                    }
                     break;
                 default:
-                    _fields.Add(jToken.Path, (JValue)jToken);
+                    _outputItems.Add(new OutputItem
+                    {
+                        Name = $"{parentKey}",
+                        Value = jToken.ToString(),
+                        SlotSetting = false
+                    });
                     break;
             }
         }
 
-        public IEnumerable<KeyValuePair<string, JValue>> GetAllFields() => _fields;
+        public IEnumerable<OutputItem> GetAllFields() => _outputItems;
     }
 }
